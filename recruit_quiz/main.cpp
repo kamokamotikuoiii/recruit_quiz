@@ -11,6 +11,18 @@ struct Question
 	string a;
 };
 
+//最大公約数を求める
+int gcd(int a, int b)
+{
+	//余りが０になったときの除数を返す
+	while (b) {
+		int r = a % b;
+		a = b; // 除数を次の被除数にする
+		b = r; // 余りを次の除数にする
+	}
+	return a;
+}
+
 int main()
 {
 	vector<Question> questions(3);
@@ -60,6 +72,15 @@ int main()
 		"球の半径" + to_string(x) + "cm,の球体がある\n" +
 		"この球体の体積をXπcm^3とする。Xの値を求めよ。",
 		to_string(x * x * x * 4 / 3) });
+
+	//サイコロの確率
+	x = uniform_int_distribution<>(1, 5)(rand);
+	y = uniform_int_distribution<>(1, 6 - x)(rand);
+	z = gcd(y + 1, 6);
+	questions.push_back({
+		"サイコロを一個ふって、" + to_string(x) + "から" + to_string(x + y) +
+		"が出る確率を求めよ",
+		to_string((y + 1) / z) + "/" + to_string(6 / z)});
 
 	cout << "[リクルート試験対策クイズ]\n";
 
